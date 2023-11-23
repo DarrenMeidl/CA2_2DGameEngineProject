@@ -34,3 +34,4 @@ class Physics extends Component{ //This is the Physics class
         return [x, x+w, y, y+h]; //This returns the bounding box
     }
 }
+export default Physics; //This exports the Physics class so it can be used in other files
