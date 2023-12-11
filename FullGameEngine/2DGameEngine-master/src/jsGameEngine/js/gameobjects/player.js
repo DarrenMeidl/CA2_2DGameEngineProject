@@ -16,7 +16,7 @@ class Player extends GameObject {
   // Constructor initializes the game object and add necessary components
   constructor(x, y) {
     super(x, y); // Call parent's constructor
-    this.renderer = new Renderer('blue', 50, 50, Images.player); // Add renderer
+    this.renderer = new Renderer('blue', 50, 50, Images.idle_0); // Add renderer
     this.addComponent(this.renderer);
     this.addComponent(new Physics({ x: 0, y: 0 }, { x: 0, y: 0 })); // Add physics
     this.addComponent(new Input()); // Add input for handling user input
@@ -34,12 +34,11 @@ class Player extends GameObject {
     this.isGamepadMovement = false;
     this.isGamepadJump = false;
 
+    //IDLE ANIMATION
     this.idleFrames = []; // Array to store idle frames
-    // Populate the idleFrames array with image frames
     this.idleFrames.push(Images.idle_0);
     this.idleFrames.push(Images.idle_1);
     this.idleFrames.push(Images.idle_2);
-
     this.idleAnimation = new Animation(this.idleFrames, 3); // Create an instance of Animation for idle animation
     this.addComponent(this.idleAnimation); // Add the idle animation to the player
   }
@@ -51,7 +50,7 @@ class Player extends GameObject {
     const physics = this.getComponent(Physics); // Get physics component
     const input = this.getComponent(Input); // Get input component
     const idleAnimation = this.getComponent(Animation); // Get idle animation component
-    
+
     
     this.handleGamepadInput(input);
     
@@ -74,11 +73,14 @@ class Player extends GameObject {
       this.updateJump(deltaTime);
     }
 
-    if (!this.isGamepadMovement) { // If the player is not moving, play idle animation
+    //Handle Idle Animation
+    if (physics.velocity.x === 0) { // If the player is not moving, play idle animation
       idleAnimation.play();
+      this.getComponent(Renderer).image = idleAnimation.getCurrentFrame(); // Renders image by setting the player's image to the current frame of the idle animation
     } 
-    else if (this.isGamepadMovement){
-      idleAnimation.stop();
+    else if (physics.velocity.x !== 0) { // If the player is moving, stop idle animation, set player image to default image
+      this.getComponent(Renderer).image = idleAnimation.stop();
+      this.getComponent(Renderer).image = Images.player;
     }
 
     // Handle collisions with collectibles

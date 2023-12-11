@@ -12,6 +12,7 @@ class Animation extends Component{
   play() { // Start animation
     if (this.isPlaying) return; // Animation is already playing
 
+    this.currentFrame = 0; // Reset frame index
     this.isPlaying = true;
     this.intervalId = setInterval(() => { // Start animation loop
       this.currentFrame = (this.currentFrame + 1) % this.frames.length; // Increment frame index
