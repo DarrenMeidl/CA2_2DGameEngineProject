@@ -49,7 +49,6 @@ class Player extends GameObject {
   update(deltaTime) {
     const physics = this.getComponent(Physics); // Get physics component
     const input = this.getComponent(Input); // Get input component
-    const idleAnimation = this.getComponent(Animation); // Get idle animation component
 
     
     this.handleGamepadInput(input);
@@ -73,15 +72,9 @@ class Player extends GameObject {
       this.updateJump(deltaTime);
     }
 
-    //Handle Idle Animation
-    if (physics.velocity.x === 0) { // If the player is not moving, play idle animation
-      idleAnimation.play();
-      this.getComponent(Renderer).image = idleAnimation.getCurrentFrame(); // Renders image by setting the player's image to the current frame of the idle animation
-    } 
-    else if (physics.velocity.x !== 0) { // If the player is moving, stop idle animation, set player image to default image
-      this.getComponent(Renderer).image = idleAnimation.stop();
-      this.getComponent(Renderer).image = Images.player;
-    }
+    this.handleAnimations(); // Handle animations
+
+    
 
     // Handle collisions with collectibles
     const collectibles = this.game.gameObjects.filter((obj) => obj instanceof Collectible);
@@ -133,6 +126,24 @@ class Player extends GameObject {
     super.update(deltaTime);
   }
 
+  //This function handles all animations
+  handleAnimations(){
+    this.handleIdleAnimation(); // Handle idle animation
+  }
+
+  handleIdleAnimation() { // Handle idle animation
+    const physics = this.getComponent(Physics); // Get physics component
+    const idleAnimation = this.getComponent(Animation); // Get idle animation component
+    //Handle Idle Animation
+    if (physics.velocity.x === 0) { // If the player is not moving, play idle animation
+      idleAnimation.play();
+      this.getComponent(Renderer).image = idleAnimation.getCurrentFrame(); // Renders image by setting the player's image to the current frame of the idle animation
+    } 
+    else if (physics.velocity.x !== 0) { // If the player is moving, stop idle animation, set player image to default image
+      this.getComponent(Renderer).image = idleAnimation.stop();
+      this.getComponent(Renderer).image = Images.player;
+    }
+  }
 
   handleGamepadInput(input){
     const gamepad = input.getGamepad(); // Get the gamepad input
@@ -180,6 +191,7 @@ class Player extends GameObject {
       //Play jump sound
       const jumpSound = new Audio(AudioFiles.jump); ////////NEW
       jumpSound.play();
+
     }
     // Initiate a double jump if the player is not on a platform and is not already double jumping and when the jump timer is 0
     if (!this.isOnPlatform && !this.isDoubleJumping && this.jumpTimer <= 0) { 
@@ -190,6 +202,7 @@ class Player extends GameObject {
       //Play jump sound
       const jumpSound = new Audio(AudioFiles.jump); ////////NEW
       jumpSound.play();
+
     }
   }
   
