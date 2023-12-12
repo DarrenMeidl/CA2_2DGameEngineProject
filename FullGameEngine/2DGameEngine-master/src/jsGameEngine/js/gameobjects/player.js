@@ -202,7 +202,7 @@ class Player extends GameObject {
       //Play jump sound
       const jumpSound = new Audio(AudioFiles.jump); ////////NEW
       jumpSound.play();
-
+      
     }
   }
   

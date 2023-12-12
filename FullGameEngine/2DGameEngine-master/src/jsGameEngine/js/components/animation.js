@@ -16,7 +16,22 @@ class Animation extends Component{
     this.isPlaying = true;
     this.intervalId = setInterval(() => { // Start animation loop
       this.currentFrame = (this.currentFrame + 1) % this.frames.length; // Increment frame index
-        console.log(`Current frame: ${this.currentFrame}`);
+      console.log(`Current frame: ${this.currentFrame}`);
+    }, 1000 / this.frameRate); // Interval is in milliseconds
+  }
+
+  playOneShot() { // Start animation and stop after one loop
+    if (this.isPlaying) return; // Animation is already playing
+
+    this.currentFrame = 0; // Reset frame index
+    this.isPlaying = true;
+    this.intervalId = setInterval(() => { // Start animation loop
+      this.currentFrame = (this.currentFrame + 1) % this.frames.length; // Increment frame index
+      console.log(`Current frame: ${this.currentFrame}`);
+
+      if (this.currentFrame === this.frames.length - 1) { // Check if it's the last frame
+        this.stop(); // Stop animation after one loop
+      }
     }, 1000 / this.frameRate); // Interval is in milliseconds
   }
 
