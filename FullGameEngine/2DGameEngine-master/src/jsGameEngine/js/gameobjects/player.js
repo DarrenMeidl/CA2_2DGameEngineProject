@@ -41,6 +41,13 @@ class Player extends GameObject {
     this.idleFrames.push(Images.idle_2);
     this.idleAnimation = new Animation(this.idleFrames, 3); // Create an instance of Animation for idle animation
     this.addComponent(this.idleAnimation); // Add the idle animation to the player
+    //IDLE ANIMATION
+    this.jumpFrames = []; // Array to store idle frames
+    this.jumpFrames.push(Images.idle_0);
+    this.jumpFrames.push(Images.idle_1);
+    this.jumpFrames.push(Images.idle_2);
+    this.jumpAnimation = new Animation(this.jumpFrames, 3); // Create an instance of Animation for idle animation
+    this.addComponent(this.jumpAnimation); // Add the idle animation to the player
   }
 
 
@@ -69,6 +76,7 @@ class Player extends GameObject {
       this.startJump();
     }
     if (this.isJumping || this.isDoubleJumping) {
+      this.handleJumpAnimation(); // Handle jump animation
       this.updateJump(deltaTime);
     }
 
@@ -135,12 +143,25 @@ class Player extends GameObject {
     const physics = this.getComponent(Physics); // Get physics component
     const idleAnimation = this.getComponent(Animation); // Get idle animation component
     //Handle Idle Animation
-    if (physics.velocity.x === 0) { // If the player is not moving, play idle animation
-      idleAnimation.play();
+    if (physics.velocity.x === 56000) { // If the player is not moving, play idle animation
+      idleAnimation.playOneShot();
       this.getComponent(Renderer).image = idleAnimation.getCurrentFrame(); // Renders image by setting the player's image to the current frame of the idle animation
     } 
-    else if (physics.velocity.x !== 0) { // If the player is moving, stop idle animation, set player image to default image
+    else if (physics.velocity.x !== 56000) { // If the player is moving, stop idle animation, set player image to default image
       this.getComponent(Renderer).image = idleAnimation.stop();
+      this.getComponent(Renderer).image = Images.player;
+    }
+  }
+
+  handleJumpAnimation() { // Handle jump animation
+    const physics = this.getComponent(Physics); // Get physics component
+    const jumpAnimation = this.getComponent(Animation); // Get idle animation component
+    if (physics.velocity.y > 0) { // If the player is not moving, play idle animation
+      jumpAnimation.play();
+      this.getComponent(Renderer).image = jumpAnimation.getCurrentFrame(); // Renders image by setting the player's image to the current frame of the idle animation
+    } 
+    else if (physics.velocity.y === 0) { // If the player is moving, stop idle animation, set player image to default image
+      this.getComponent(Renderer).image = jumpAnimation.stop();
       this.getComponent(Renderer).image = Images.player;
     }
   }
@@ -191,7 +212,6 @@ class Player extends GameObject {
       //Play jump sound
       const jumpSound = new Audio(AudioFiles.jump); ////////NEW
       jumpSound.play();
-
     }
     // Initiate a double jump if the player is not on a platform and is not already double jumping and when the jump timer is 0
     if (!this.isOnPlatform && !this.isDoubleJumping && this.jumpTimer <= 0) { 
@@ -202,7 +222,6 @@ class Player extends GameObject {
       //Play jump sound
       const jumpSound = new Audio(AudioFiles.jump); ////////NEW
       jumpSound.play();
-      
     }
   }
   

@@ -26,11 +26,12 @@ class Animation extends Component{
     this.currentFrame = 0; // Reset frame index
     this.isPlaying = true;
     this.intervalId = setInterval(() => { // Start animation loop
-      this.currentFrame = (this.currentFrame + 1) % this.frames.length; // Increment frame index
+      this.currentFrame++; // Increment frame index
       console.log(`Current frame: ${this.currentFrame}`);
-
-      if (this.currentFrame === this.frames.length - 1) { // Check if it's the last frame
-        this.stop(); // Stop animation after one loop
+      if (this.currentFrame === this.frames.length) { // Check if it's the last frame
+        clearInterval(this.intervalId); // Stop animation loop
+        this.isPlaying = false;
+        console.log('Animation completed');
       }
     }, 1000 / this.frameRate); // Interval is in milliseconds
   }
