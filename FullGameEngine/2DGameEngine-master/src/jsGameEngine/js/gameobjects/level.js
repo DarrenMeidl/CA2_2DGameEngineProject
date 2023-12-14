@@ -15,8 +15,8 @@ class Level extends Game {
     super(canvasId);
     
     // Create a player object and add it to the game
-    const player = new Player(this.canvas.width / 2 - 25, this.canvas.height / 2 - 25);
-    this.addGameObject(player);
+    //const player = new Player(this.canvas.width / 2 - 25, this.canvas.height / 2 - 25);
+    //this.addGameObject(player);
     
     // Add the player UI object to the game
     this.addGameObject(new PlayerUI(10, 10));
@@ -27,7 +27,7 @@ class Level extends Game {
     audioManager.setVolume(0); ////////NEW
 
     // Set the game's camera target to the player
-    this.camera.target = player;
+    //this.camera.target = player;
 
     // Define the platform's width and the gap between platforms
     const platformWidth = 200;
@@ -35,20 +35,31 @@ class Level extends Game {
 
     // Create platforms and add them to the game
     const platforms = [
-      new Platform(0, this.canvas.height - 20, platformWidth, 20),
-      new Platform(platformWidth + gap, this.canvas.height - 20, platformWidth, 20),
-      new Platform(2 * (platformWidth + gap), this.canvas.height - 20, platformWidth, 20),
-      new Platform(3 * (platformWidth + gap), this.canvas.height - 20, platformWidth, 20),
-      new Platform(4 * (platformWidth + gap), this.canvas.height - 20, platformWidth, 20),
+      //Starting platforms
+      new Platform(platformWidth + gap, this.canvas.height, platformWidth, 20),
+      new Platform(2 * (platformWidth + gap), this.canvas.height, platformWidth, 20),
+      new Platform(3 * (platformWidth + gap), this.canvas.height, platformWidth, 20),
+      
+      new Platform(4 * (platformWidth + gap), this.canvas.height - 100, platformWidth/2, 20, "blue"),
+      new Platform(3 * (platformWidth + 150), this.canvas.height - 250, platformWidth/2, 20, "blue"),
+      new Platform(4 * (platformWidth + gap), this.canvas.height - 400, platformWidth/2, 20, "blue"),
+
+      new Platform(5 * (platformWidth + 150), this.canvas.height - 400, 800, 20, "yellow"),
     ];
     for (const platform of platforms) {
       this.addGameObject(platform);
     }
 
+
+    const player = new Player(1250, this.canvas.height - 400);
+    this.addGameObject(player);
+
+    this.camera.target = player;
+
     // Create enemies and add them to the game
-    this.addGameObject(new Enemy(50, this.canvas.height - 90));
     this.addGameObject(new Enemy(platformWidth + gap + 50, this.canvas.height - 90));
     this.addGameObject(new Enemy(2 * (platformWidth + gap) + 50, this.canvas.height - 90));
+    this.addGameObject(new Enemy(3 * (platformWidth + gap) + 50, this.canvas.height - 90));
 
     // Create collectibles and add them to the game
     this.addGameObject(new Collectible(250, this.canvas.height - 100, 20, 20));

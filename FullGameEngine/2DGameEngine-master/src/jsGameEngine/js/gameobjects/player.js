@@ -47,35 +47,47 @@ class Player extends GameObject {
   
   // The update function runs every frame and contains game logic
   update(deltaTime) {
-    const physics = this.getComponent(Physics); // Get physics component
-    const input = this.getComponent(Input); // Get input component
-
-    
-    this.handleGamepadInput(input);
-    
-    // Handle player movement
-    if (!this.isGamepadMovement && input.isKeyDown('ArrowRight')) {
-      physics.velocity.x = 100;
-      this.direction = -1;
-    } else if (!this.isGamepadMovement && input.isKeyDown('ArrowLeft')) {
-      physics.velocity.x = -100;
-      this.direction = 1;
-    } else if (!this.isGamepadMovement) {
-      physics.velocity.x = 0;
-    }
-
-    // Handle player jumping
-    if (!this.isGamepadJump && input.isKeyDown('ArrowUp')) {
-      this.startJump();
-    }
-    if (this.isJumping || this.isDoubleJumping) {
-      this.updateJump(deltaTime);
-    }
-
+    const input = this.getComponent(Input); // Get the input component
+    this.handleGamepadInput(input); // Handle gamepad input
+    this.handlePlayerMovement(deltaTime); // Handle movement
     this.handleAnimations(); // Handle animations
-
+    this.handleCollisions(); // Handle collisions
     
+    // Check if player has fallen off the bottom of the screen
+    if (this.y > this.game.canvas.height) {
+      this.resetPlayerState();
+    }
+    // Check if player has no lives left
+    if (this.lives <= 0) {
+      location.reload();
+    }
+    // Check if player has collected all collectibles
+    if (this.score >= 3) {
+      console.log('You win!');
+      location.reload();
+    }
+    super.update(deltaTime);
+  }
 
+  handleCollisions(){
+    this.handleEnemyCollisions();
+    this.handleCollectibleCollisions();
+    this.handlePlatformCollisions();
+  }
+
+  handleEnemyCollisions(){
+    const physics = this.getComponent(Physics); // Get physics component
+    // Handle collisions with enemies
+    const enemies = this.game.gameObjects.filter((obj) => obj instanceof Enemy);
+    for (const enemy of enemies) {
+      if (physics.isColliding(enemy.getComponent(Physics))) {
+        this.collidedWithEnemy();
+      }
+    }
+  }
+
+  handleCollectibleCollisions(){
+    const physics = this.getComponent(Physics); // Get physics component
     // Handle collisions with collectibles
     const collectibles = this.game.gameObjects.filter((obj) => obj instanceof Collectible);
     for (const collectible of collectibles) {
@@ -84,15 +96,10 @@ class Player extends GameObject {
         this.game.removeGameObject(collectible);
       }
     }
-  
-    // Handle collisions with enemies
-    const enemies = this.game.gameObjects.filter((obj) => obj instanceof Enemy);
-    for (const enemy of enemies) {
-      if (physics.isColliding(enemy.getComponent(Physics))) {
-        this.collidedWithEnemy();
-      }
-    }
-  
+  }
+
+  handlePlatformCollisions(){
+    const physics = this.getComponent(Physics); // Get physics component
     // Handle collisions with platforms
     this.isOnPlatform = false;  // Reset this before checking collisions with platforms
     const platforms = this.game.gameObjects.filter((obj) => obj instanceof Platform); // Get all platforms
@@ -106,26 +113,38 @@ class Player extends GameObject {
         }
       }
     }
-  
-    // Check if player has fallen off the bottom of the screen
-    if (this.y > this.game.canvas.height) {
-      this.resetPlayerState();
-    }
-
-    // Check if player has no lives left
-    if (this.lives <= 0) {
-      location.reload();
-    }
-
-    // Check if player has collected all collectibles
-    if (this.score >= 3) {
-      console.log('You win!');
-      location.reload();
-    }
-
-    super.update(deltaTime);
   }
 
+  handlePlayerMovement(deltaTime){
+    this.handleWalk();
+    this.handleJump(deltaTime);
+  }
+
+  handleJump(deltaTime){
+    const input = this.getComponent(Input); // Get input component
+    // Handle player jumping
+    if (!this.isGamepadJump && input.isKeyDown('ArrowUp')) {
+      this.startJump();
+    }
+    if (this.isJumping || this.isDoubleJumping) {
+      this.updateJump(deltaTime);
+    }
+  }
+  
+  handleWalk(){
+    const input = this.getComponent(Input); // Get input component
+    const physics = this.getComponent(Physics); //Get physics component
+    // Handle player movement
+    if (!this.isGamepadMovement && input.isKeyDown('ArrowRight')) {
+      physics.velocity.x = 100;
+      this.direction = -1;
+    } else if (!this.isGamepadMovement && input.isKeyDown('ArrowLeft')) {
+      physics.velocity.x = -100;
+      this.direction = 1;
+    } else if (!this.isGamepadMovement) {
+      physics.velocity.x = 0;
+    }
+  }
   //This function handles all animations
   handleAnimations(){
     this.handleIdleAnimation(); // Handle idle animation
