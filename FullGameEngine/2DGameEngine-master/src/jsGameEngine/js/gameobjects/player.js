@@ -10,6 +10,7 @@ import Collectible from './collectible.js';
 import ParticleSystem from '../gameobjects/particleSystem.js';
 import { AudioFiles } from '../components/resources.js'; ////////NEW
 import Animation from '../components/animation.js'; ////////NEW
+import FinishPoint from './finish.js';
 
 // Defining a class Player that extends GameObject
 class Player extends GameObject {
@@ -69,10 +70,25 @@ class Player extends GameObject {
     super.update(deltaTime);
   }
 
+
+
+
   handleCollisions(){
     this.handleEnemyCollisions();
     this.handleCollectibleCollisions();
     this.handlePlatformCollisions();
+    this.handleFinishPointCollision();
+  }
+
+  handleFinishPointCollision(){
+    const physics = this.getComponent(Physics); // Get physics component
+    // Handle collisions with collectibles
+    const finishpoints = this.game.gameObjects.filter((obj) => obj instanceof FinishPoint);
+    for (const finishpoint of finishpoints) {
+      if (physics.isColliding(finishpoint.getComponent(Physics))) {
+        this.resetGame();
+      }
+    }
   }
 
   handleEnemyCollisions(){
@@ -110,10 +126,13 @@ class Player extends GameObject {
           physics.acceleration.y = 0;
           this.y = platform.y - this.renderer.height;
           this.isOnPlatform = true;
+          console.log("On Platform");
         }
       }
     }
   }
+
+
 
   handlePlayerMovement(deltaTime){
     this.handleWalk();

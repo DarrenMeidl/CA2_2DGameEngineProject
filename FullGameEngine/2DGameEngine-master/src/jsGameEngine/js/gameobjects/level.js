@@ -6,6 +6,7 @@ import PlayerUI from './playerUI.js';
 import Platform from './platform.js';
 import Collectible from './collectible.js';
 import AudioManager from './audiomanager.js'; ////////NEW
+import FinishPoint from './finish.js';
 // Define a class Level that extends the Game class from the engine
 class Level extends Game {
   
@@ -39,12 +40,15 @@ class Level extends Game {
       new Platform(platformWidth + gap, this.canvas.height, platformWidth, 20),
       new Platform(2 * (platformWidth + gap), this.canvas.height, platformWidth, 20),
       new Platform(3 * (platformWidth + gap), this.canvas.height, platformWidth, 20),
-      
+      //Stair platforms
       new Platform(4 * (platformWidth + gap), this.canvas.height - 100, platformWidth/2, 20, "blue"),
       new Platform(3 * (platformWidth + 150), this.canvas.height - 250, platformWidth/2, 20, "blue"),
       new Platform(4 * (platformWidth + gap), this.canvas.height - 400, platformWidth/2, 20, "blue"),
-
-      new Platform(5 * (platformWidth + 150), this.canvas.height - 400, 800, 20, "yellow"),
+      //3rd Section
+      new Platform(1400, this.canvas.height - 400, 700, 20, "yellow"),
+      new Platform(1400, this.canvas.height - 700, 700, 20, "yellow"),
+      //4th Section
+      
     ];
     for (const platform of platforms) {
       this.addGameObject(platform);
@@ -62,9 +66,12 @@ class Level extends Game {
     this.addGameObject(new Enemy(3 * (platformWidth + gap) + 50, this.canvas.height - 90));
 
     // Create collectibles and add them to the game
-    this.addGameObject(new Collectible(250, this.canvas.height - 100, 20, 20));
     this.addGameObject(new Collectible(450, this.canvas.height - 100, 20, 20));
     this.addGameObject(new Collectible(650, this.canvas.height - 100, 20, 20));
+    this.addGameObject(new Collectible(850, this.canvas.height - 100, 20, 20));
+    
+    // Add finish point
+    this.addGameObject(new FinishPoint(950, this.canvas.height - 100, 30, 30, "blue"));
   }
   
 }
