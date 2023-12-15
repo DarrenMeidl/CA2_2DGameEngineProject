@@ -14,6 +14,7 @@ import {Images} from '../components/resources.js';
 import Player from './player.js';
 import Platform from './platform.js';
 import Bullet from './bullet.js';
+import ParticleSystem from '../gameobjects/particleSystem.js';
 
 // Define a new class, Enemy, which extends (i.e., inherits from) GameObject
 class Enemy extends GameObject {
@@ -87,8 +88,9 @@ class Enemy extends GameObject {
     const bullets = this.game.gameObjects.filter(obj => obj instanceof Bullet); // Find the bullet
     for (const bullet of bullets) {
       if (physics.isColliding(bullet.getComponent(Physics))) {
-        this.game.removeGameObject(bullet);
-        this.game.removeGameObject(this);
+        this.emitBulletParticles(this); // Emit particles on the enemy's position
+        this.game.removeGameObject(bullet); // Remove the bullet from the game
+        this.game.removeGameObject(this); // Remove the enemy from the game
       }
     }
   }
@@ -118,6 +120,12 @@ class Enemy extends GameObject {
         this.isOnPlatform = true;
       }
     }
+  }
+
+  emitBulletParticles() {
+    // Create a particle system at the player's position when a collectible is collected
+    const particleSystem = new ParticleSystem(this.x, this.y, 'purple', 20, 0.5, 0.5);
+    this.game.addGameObject(particleSystem);
   }
 }
 
