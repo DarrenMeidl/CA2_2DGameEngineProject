@@ -286,16 +286,18 @@ class Player extends GameObject {
 
   handleShoot(){
     const input = this.getComponent(Input); // Get input component
-    
-    // Handle player shoot
-    if (input.isKeyDown('Escape') && !this.isShooting) {
+    // Handle player shoot with cooldown
+    if (input.isKeyDown('Escape') && !this.isCoolingDown) {
       console.log("Calling shoot");
       this.shoot();
+      this.isCoolingDown = true;
+      setTimeout(() => {
+        this.isCoolingDown = false;
+      }, 250); // Cooldown for half a second (500 milliseconds)
     }
   }
 
   shoot(){
-    this.isShooting = true;
     const bullet = new Bullet(this.x, this.y, 5, 5);
     this.bullets.push(bullet);
     this.game.addGameObject(bullet);
