@@ -8,7 +8,7 @@ import Renderer from '../components/renderer.js';
 import Physics from '../components/physics.js';
 
 class Bullet extends GameObject {
-    constructor(x, y, width, height, color = 'purple') {   
+    constructor(x, y, width, height, direction, color = 'purple') {   
         // Call the constructor of the superclass (GameObject) with the x and y coordinates
         super(x, y);
         // Add a new Renderer component to this bullet. The renderer is responsible for drawing the bullet.
@@ -25,10 +25,16 @@ class Bullet extends GameObject {
     
         // Set the 'value' property of this bullet. This could be used to score points when the bullet is collected.
         this.value = 1;
+        this.direction = direction;
     }
 
     move(){
-        this.x = this.x + 5;
+        if(this.direction == 1){
+            this.x = this.x + 5;
+        }
+        else {
+            this.x = this.x - 5;
+        }
     }
 }
 export default Bullet;

@@ -286,6 +286,7 @@ class Player extends GameObject {
 
   handleShoot(){
     const input = this.getComponent(Input); // Get input component
+    
     // Handle player shoot with cooldown
     if (input.isKeyDown('Escape') && !this.isCoolingDown) {
       console.log("Calling shoot");
@@ -298,7 +299,8 @@ class Player extends GameObject {
   }
 
   shoot(){
-    const bullet = new Bullet(this.x, this.y, 5, 5);
+    const bulletDirection = this.direction;
+    const bullet = new Bullet(this.x, this.y, 5, 5, bulletDirection);
     this.bullets.push(bullet);
     this.game.addGameObject(bullet);
     console.log("Called Shoot");
