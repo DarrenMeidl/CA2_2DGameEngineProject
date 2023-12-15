@@ -7,6 +7,7 @@ import Platform from './platform.js';
 import Collectible from './collectible.js';
 import AudioManager from './audiomanager.js'; ////////NEW
 import FinishPoint from './finish.js';
+import GameManager from './gamemanager.js';
 // Define a class Level that extends the Game class from the engine
 class Level extends Game {
   
@@ -72,6 +73,9 @@ class Level extends Game {
     
     // Add finish point
     this.addGameObject(new FinishPoint(950, this.canvas.height - 100, 30, 30, "blue"));
+
+    const gameManager = new GameManager(0, 0); // Create a new game manager object
+    this.addGameObject(gameManager); // Add the game manager to the game
   }
   
 }

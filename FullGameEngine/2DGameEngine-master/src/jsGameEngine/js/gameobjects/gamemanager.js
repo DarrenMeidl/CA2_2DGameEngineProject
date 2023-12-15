@@ -7,11 +7,12 @@ class GameManager extends GameObject{
         super(x, y);
         this.x = x;
         this.y = y;
+        this.addComponent(new Input()); // Add input for handling user input
     }
 
     update(deltaTime){
-        const input = this.getComponent(Input); // Get input component
-        if (input.isKeyDown('P')){
+        const input = this.getComponent(Input); // Get the input component
+        if (input.isKeyDown('Escape')){
             console.log('P pressed');
             this.resetGame();
         }
@@ -19,10 +20,11 @@ class GameManager extends GameObject{
     }
 
     resetGame() {
-        const player = new Player(this.canvas.width / 2 - 25, this.canvas.height / 2 - 25);
+        const player = this.game.gameObjects.find(obj => obj instanceof Player); // Find the player
         // Reset the game state, which includes the player's state
         player.lives = 3;
         player.score = 0;
         player.resetPlayerState();
     }
 }
+export default GameManager;

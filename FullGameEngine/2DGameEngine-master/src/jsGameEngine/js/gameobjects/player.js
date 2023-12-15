@@ -300,7 +300,7 @@ class Player extends GameObject {
 
   shoot(){
     const bulletDirection = this.direction;
-    const bullet = new Bullet(this.x, this.y, 5, 5, bulletDirection);
+    const bullet = new Bullet(this.x, this.y + 25, 5, 5, bulletDirection);
     this.bullets.push(bullet);
     this.game.addGameObject(bullet);
     console.log("Called Shoot");
@@ -316,13 +316,6 @@ class Player extends GameObject {
     this.isOnPlatform = false;
     this.isJumping = false;
     this.jumpTimer = 0;
-  }
-
-  resetGame() {
-    // Reset the game state, which includes the player's state
-    this.lives = 3;
-    this.score = 0;
-    this.resetPlayerState();
   }
 }
 
