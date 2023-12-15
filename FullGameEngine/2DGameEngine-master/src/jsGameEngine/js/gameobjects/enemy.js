@@ -40,11 +40,15 @@ class Enemy extends GameObject {
   // Define an update method that will run every frame of the game. It takes deltaTime as an argument
   // which represents the time passed since the last frame
   update(deltaTime) {
+    this.handleCollisions();
+    this.handleMovement(deltaTime);
+    // Call the update method of the superclass (GameObject), passing along deltaTime
+    super.update(deltaTime);
+  }
+
+  handleMovement(deltaTime){
     // Get the Physics component of this enemy
     const physics = this.getComponent(Physics);
-
-    this.handleCollisions();
-
     // Check if the enemy is moving to the right
     if (this.movingRight) {
       // If it hasn't reached its movement limit, make it move right
@@ -69,13 +73,39 @@ class Enemy extends GameObject {
         this.movementDistance = 0;
       }
     }
+  }
 
+  handleCollisions(){
+    this.handleBulletCollisions();
+    this.handlePlayerCollisions();
+    this.handlePlatformCollisions();
+  }
+
+  handleBulletCollisions(){
+    const physics = this.getComponent(Physics); // Get physics component
+    // Handle collisions with collectibles
+    const bullets = this.game.gameObjects.filter(obj => obj instanceof Bullet); // Find the bullet
+    for (const bullet of bullets) {
+      if (physics.isColliding(bullet.getComponent(Physics))) {
+        this.game.removeGameObject(bullet);
+        this.game.removeGameObject(this);
+      }
+    }
+  }
+
+  handlePlayerCollisions(){
+    // Get the Physics component of this enemy
+    const physics = this.getComponent(Physics);
     // Check if the enemy is colliding with the player
     const player = this.game.gameObjects.find(obj => obj instanceof Player); // Find the player
     if (physics.isColliding(player.getComponent(Physics))) { // Check if the enemy is colliding with the player
       player.collidedWithEnemy(); // Call the collidedWithEnemy method of the player
     }
+  }
 
+  handlePlatformCollisions(){
+    // Get the Physics component of this enemy
+    const physics = this.getComponent(Physics);
     // Check if the enemy is colliding with any platforms
     const platforms = this.game.gameObjects.filter(obj => obj instanceof Platform);
     this.isOnPlatform = false;
@@ -86,24 +116,6 @@ class Enemy extends GameObject {
         physics.acceleration.y = 0;
         this.y = platform.y - this.getComponent(Renderer).height;
         this.isOnPlatform = true;
-      }
-    }
-
-    // Call the update method of the superclass (GameObject), passing along deltaTime
-    super.update(deltaTime);
-  }
-
-  handleCollisions(){
-    this.handleBulletCollisions();
-  }
-
-  handleBulletCollisions(){
-    const physics = this.getComponent(Physics); // Get physics component
-    // Handle collisions with collectibles
-    const bullets = this.game.gameObjects.filter(obj => obj instanceof Bullet); // Find the bullet
-    for (const bullet of bullets) {
-      if (physics.isColliding(bullet.getComponent(Physics))) {
-        this.game.removeGameObject(bullet);
       }
     }
   }
