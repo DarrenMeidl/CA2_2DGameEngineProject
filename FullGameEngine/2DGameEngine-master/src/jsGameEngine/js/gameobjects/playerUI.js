@@ -20,7 +20,7 @@ class PlayerUI extends GameObject {
     // Update the text of the UI component to reflect the player's current lives and score.
     this.uiComponent.setText(`Hearts: ${player.lives} Score: ${player.score}`);
     //ADDED SET COLOUR AND FONT
-    this.uiComponent.setColour('black'); // Set the colour of the UI component.
+    this.uiComponent.setColour('white'); // Set the colour of the UI component.
     this.uiComponent.setFont('20px Cambria'); // Set the font of the UI component.
     this.uiComponent.setTextAlign('left'); // Set the text alignment of the UI component.
     this.uiComponent.setPos(540, 10); // Set the position of the UI component.

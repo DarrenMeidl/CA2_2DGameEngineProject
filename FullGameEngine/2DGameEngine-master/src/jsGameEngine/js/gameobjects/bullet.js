@@ -8,7 +8,7 @@ import Renderer from '../components/renderer.js';
 import Physics from '../components/physics.js';
 
 class Bullet extends GameObject {
-    constructor(x, y, width, height, direction, color = 'purple') {   
+    constructor(x, y, width, height, direction, color = 'white') {   
         // Call the constructor of the superclass (GameObject) with the x and y coordinates
         super(x, y);
         // Add a new Renderer component to this bullet. The renderer is responsible for drawing the bullet.
