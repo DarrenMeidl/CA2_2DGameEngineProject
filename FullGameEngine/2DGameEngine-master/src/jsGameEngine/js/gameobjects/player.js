@@ -10,8 +10,8 @@ import Collectible from './collectible.js';
 import ParticleSystem from '../gameobjects/particleSystem.js';
 import { AudioFiles } from '../components/resources.js'; ////////NEW
 import Animation from '../components/animation.js'; ////////NEW
-import FinishPoint from './finish.js';
-
+import FinishPoint from './finish.js'; ////////NEW
+import Bullet from './bullet.js'; ////////NEW
 // Defining a class Player that extends GameObject
 class Player extends GameObject {
   // Constructor initializes the game object and add necessary components
@@ -42,6 +42,9 @@ class Player extends GameObject {
     this.idleFrames.push(Images.idle_2);
     this.idleAnimation = new Animation(this.idleFrames, 3); // Create an instance of Animation for idle animation
     this.addComponent(this.idleAnimation); // Add the idle animation to the player
+
+    this.isShooting = false;
+    this.bullets = [];
   }
 
 
@@ -53,7 +56,12 @@ class Player extends GameObject {
     this.handlePlayerMovement(deltaTime); // Handle movement
     this.handleAnimations(); // Handle animations
     this.handleCollisions(); // Handle collisions
-    
+    this.handleShoot(); // Handle shoot
+
+    for (const bullet of this.bullets) {
+      bullet.move();
+    }
+
     // Check if player has fallen off the bottom of the screen
     if (this.y > this.game.canvas.height) {
       this.resetPlayerState();
@@ -126,7 +134,6 @@ class Player extends GameObject {
           physics.acceleration.y = 0;
           this.y = platform.y - this.renderer.height;
           this.isOnPlatform = true;
-          console.log("On Platform");
         }
       }
     }
@@ -275,6 +282,24 @@ class Player extends GameObject {
     // Create a particle system at the player's position when a collectible is collected
     const particleSystem = new ParticleSystem(this.x, this.y, 'yellow', 20, 1, 0.5);
     this.game.addGameObject(particleSystem);
+  }
+
+  handleShoot(){
+    const input = this.getComponent(Input); // Get input component
+    
+    // Handle player shoot
+    if (input.isKeyDown('Escape') && !this.isShooting) {
+      console.log("Calling shoot");
+      this.shoot();
+    }
+  }
+
+  shoot(){
+    this.isShooting = true;
+    const bullet = new Bullet(this.x, this.y, 5, 5);
+    this.bullets.push(bullet);
+    this.game.addGameObject(bullet);
+    console.log("Called Shoot");
   }
 
   resetPlayerState() {

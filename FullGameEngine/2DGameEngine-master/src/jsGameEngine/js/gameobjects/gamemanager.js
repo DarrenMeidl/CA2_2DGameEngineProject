@@ -14,7 +14,6 @@ class GameManager extends GameObject{
         if (input.isKeyDown('ArrowUp')){
             this.resetGame();
         }
-        
         super.update(deltaTime);
     }
 
@@ -24,5 +23,5 @@ class GameManager extends GameObject{
         player.lives = 3;
         player.score = 0;
         player.resetPlayerState();
-      }
+    }
 }
