@@ -99,6 +99,12 @@ class Game {
     this.gameObjectsToRemove.push(gameObject);
   }
 
+  // This method removes all game objects from the game.
+  removeAllGameObjects() {
+    // Clear the array of game objects.
+    this.gameObjects = [];
+  }
+
   // This method resets the game to its initial state and then restarts it.
   reset() {
     // Stop the game.
@@ -110,9 +116,9 @@ class Game {
         gameObject.reset();
       }
     }
-
+    console.log("Game reset");
     // Restart the game.
-    this.start();
+    //this.start();
   }
 }
 

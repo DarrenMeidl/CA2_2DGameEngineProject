@@ -59,28 +59,31 @@ class Player extends GameObject {
     this.handleAnimations(); // Handle animations
     this.handleCollisions(); // Handle collisions
     this.handleShoot(); // Handle shoot
-
+    this.handlePlayerStates(); // Handle player states
+    // Move all bullets
     for (const bullet of this.bullets) {
       bullet.move();
     }
+    super.update(deltaTime); // Call parent's update method
+  }
 
+  handlePlayerStates(){
     // Check if player has fallen off the bottom of the screen
     if (this.y > this.game.canvas.height) {
-      this.resetPlayerState();
+      this.lives--;
     }
     // Check if player has no lives left
     if (this.lives <= 0) {
-      location.reload();
+      const gameManager = this.game.gameObjects.find(obj => obj instanceof GameManager); // Find the game manager
+      gameManager.resetGame();
     }
     // Check if player has collected all collectibles
     if (this.score >= 3) {
       console.log('You win!');
-      location.reload();
+      const gameManager = this.game.gameObjects.find(obj => obj instanceof GameManager); // Find the game manager
+      gameManager.resetGame();
     }
-    super.update(deltaTime);
   }
-
-
 
 
   handleCollisions(){
@@ -309,16 +312,23 @@ class Player extends GameObject {
     console.log("Called Shoot");
   }
 
-  resetPlayerState() {
+  reset() {
     // Reset the player's state, repositioning it and nullifying movement
     this.x = 1250;
     this.y = -100;
     this.getComponent(Physics).velocity = { x: 0, y: 0 };
     this.getComponent(Physics).acceleration = { x: 0, y: 0 };
+    this.lives = 3;
+    this.score = 0;
     this.direction = 1;
     this.isOnPlatform = false;
     this.isJumping = false;
     this.jumpTimer = 0;
+    this.isInvulnerable = false;
+    this.isGamepadMovement = false;
+    this.isGamepadJump = false;
+    this.isShooting = false;
+    this.bullets = [];
   }
 }
 

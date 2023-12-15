@@ -25,6 +25,15 @@ class PlayerUI extends GameObject {
     this.uiComponent.setTextAlign('left'); // Set the text alignment of the UI component.
     this.uiComponent.setPos(540, 10); // Set the position of the UI component.
   }
+
+  reset(){
+    this.uiComponent.setText(`Hearts: 3 Score: 0`);
+    //ADDED SET COLOUR AND FONT
+    this.uiComponent.setColour('white'); // Set the colour of the UI component.
+    this.uiComponent.setFont('20px Cambria'); // Set the font of the UI component.
+    this.uiComponent.setTextAlign('left'); // Set the text alignment of the UI component.
+    this.uiComponent.setPos(540, 10); // Set the position of the UI component.
+  }
 }
 
 export default PlayerUI; // Export the PlayerUI class for use in other modules.
