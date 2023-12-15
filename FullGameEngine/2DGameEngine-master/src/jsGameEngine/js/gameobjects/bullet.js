@@ -30,10 +30,10 @@ class Bullet extends GameObject {
 
     move(){
         if(this.direction == 1){
-            this.x = this.x + 5;
+            this.x = this.x - 5;
         }
         else {
-            this.x = this.x - 5;
+            this.x = this.x + 5;
         }
     }
 }
