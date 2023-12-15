@@ -13,6 +13,7 @@ import {Images} from '../components/resources.js';
 // Import the Player and Platform classes from the current directory
 import Player from './player.js';
 import Platform from './platform.js';
+import Bullet from './bullet.js';
 
 // Define a new class, Enemy, which extends (i.e., inherits from) GameObject
 class Enemy extends GameObject {
@@ -42,6 +43,8 @@ class Enemy extends GameObject {
     // Get the Physics component of this enemy
     const physics = this.getComponent(Physics);
 
+    this.handleCollisions();
+
     // Check if the enemy is moving to the right
     if (this.movingRight) {
       // If it hasn't reached its movement limit, make it move right
@@ -68,9 +71,9 @@ class Enemy extends GameObject {
     }
 
     // Check if the enemy is colliding with the player
-    const player = this.game.gameObjects.find(obj => obj instanceof Player);
-    if (physics.isColliding(player.getComponent(Physics))) {
-      player.collidedWithEnemy();
+    const player = this.game.gameObjects.find(obj => obj instanceof Player); // Find the player
+    if (physics.isColliding(player.getComponent(Physics))) { // Check if the enemy is colliding with the player
+      player.collidedWithEnemy(); // Call the collidedWithEnemy method of the player
     }
 
     // Check if the enemy is colliding with any platforms
@@ -88,6 +91,21 @@ class Enemy extends GameObject {
 
     // Call the update method of the superclass (GameObject), passing along deltaTime
     super.update(deltaTime);
+  }
+
+  handleCollisions(){
+    this.handleBulletCollisions();
+  }
+
+  handleBulletCollisions(){
+    const physics = this.getComponent(Physics); // Get physics component
+    // Handle collisions with collectibles
+    const bullets = this.game.gameObjects.filter(obj => obj instanceof Bullet); // Find the bullet
+    for (const bullet of bullets) {
+      if (physics.isColliding(bullet.getComponent(Physics))) {
+        this.game.removeGameObject(bullet);
+      }
+    }
   }
 }
 

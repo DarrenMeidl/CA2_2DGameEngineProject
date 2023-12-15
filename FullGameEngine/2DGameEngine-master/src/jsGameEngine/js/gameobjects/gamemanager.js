@@ -11,7 +11,8 @@ class GameManager extends GameObject{
 
     update(deltaTime){
         const input = this.getComponent(Input); // Get input component
-        if (input.isKeyDown('ArrowUp')){
+        if (input.isKeyDown('P')){
+            console.log('P pressed');
             this.resetGame();
         }
         super.update(deltaTime);
