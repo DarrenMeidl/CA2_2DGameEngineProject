@@ -56,7 +56,7 @@ class Level extends Game {
     }
 
 
-    const player = new Player(1250, this.canvas.height - 400);
+    const player = new Player(1250, this.canvas.height - 500);
     this.addGameObject(player);
 
     this.camera.target = player;
@@ -72,7 +72,7 @@ class Level extends Game {
     this.addGameObject(new Collectible(850, this.canvas.height - 100, 20, 20));
     
     // Add finish point
-    this.addGameObject(new FinishPoint(950, this.canvas.height - 100, 30, 30, "blue"));
+    this.addGameObject(new FinishPoint(1500, 87, 30, 30, "blue"));
 
     const gameManager = new GameManager(0, 0); // Create a new game manager object
     this.addGameObject(gameManager); // Add the game manager to the game

@@ -12,6 +12,8 @@ import { AudioFiles } from '../components/resources.js'; ////////NEW
 import Animation from '../components/animation.js'; ////////NEW
 import FinishPoint from './finish.js'; ////////NEW
 import Bullet from './bullet.js'; ////////NEW
+import GameManager from './gamemanager.js'; ////////NEW
+
 // Defining a class Player that extends GameObject
 class Player extends GameObject {
   // Constructor initializes the game object and add necessary components
@@ -94,7 +96,8 @@ class Player extends GameObject {
     const finishpoints = this.game.gameObjects.filter((obj) => obj instanceof FinishPoint);
     for (const finishpoint of finishpoints) {
       if (physics.isColliding(finishpoint.getComponent(Physics))) {
-        this.resetGame();
+        const gameManager = this.game.gameObjects.find(obj => obj instanceof GameManager); // Find the game manager
+        gameManager.resetGame();
       }
     }
   }
@@ -308,8 +311,8 @@ class Player extends GameObject {
 
   resetPlayerState() {
     // Reset the player's state, repositioning it and nullifying movement
-    this.x = this.game.canvas.width / 2;
-    this.y = this.game.canvas.height / 2;
+    this.x = 1250;
+    this.y = -100;
     this.getComponent(Physics).velocity = { x: 0, y: 0 };
     this.getComponent(Physics).acceleration = { x: 0, y: 0 };
     this.direction = 1;

@@ -12,8 +12,8 @@ class GameManager extends GameObject{
 
     update(deltaTime){
         const input = this.getComponent(Input); // Get the input component
-        if (input.isKeyDown('Escape')){
-            console.log('P pressed');
+        if (input.isKeyDown('KeyR')){
+            console.log('R pressed');
             this.resetGame();
         }
         super.update(deltaTime);
