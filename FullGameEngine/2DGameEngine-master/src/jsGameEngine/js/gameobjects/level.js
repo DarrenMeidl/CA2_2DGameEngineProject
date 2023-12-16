@@ -62,9 +62,9 @@ class Level extends Game {
     this.camera.target = player;
 
     // Create enemies and add them to the game
-    this.addGameObject(new Enemy(platformWidth + gap + 50, 300));
-    this.addGameObject(new Enemy(2 * (platformWidth + gap) + 50, 300));
-    this.addGameObject(new Enemy(3 * (platformWidth + gap) + 50, 300));
+    this.addGameObject(new Enemy(platformWidth + gap + 50, 300, 5));
+    this.addGameObject(new Enemy(2 * (platformWidth + gap) + 50, 300, 5));
+    this.addGameObject(new Enemy(3 * (platformWidth + gap) + 50, 300, 3));
 
     // Create collectibles and add them to the game
     this.addGameObject(new Collectible(450, 400, 20, 20));

@@ -20,10 +20,11 @@ import ParticleSystem from '../gameobjects/particleSystem.js';
 class Enemy extends GameObject {
 
   // Define the constructor for this class, which takes two arguments for the x and y coordinates
-  constructor(x, y) {
+  constructor(x, y, lives) {
     // Call the constructor of the superclass (GameObject) with the x and y coordinates
     super(x, y);
-    
+
+    this.lives = lives; // Set the number of lives of this enemy
     // Add a Renderer component to this enemy, responsible for rendering it in the game.
     // The renderer uses the color 'green', dimensions 50x50, and an enemy image from the Images object
     this.addComponent(new Renderer('green', 50, 50, Images.enemy));
@@ -43,10 +44,17 @@ class Enemy extends GameObject {
   update(deltaTime) {
     this.handleCollisions();
     this.handleMovement(deltaTime);
+    this.handleEnemyState();
     // Call the update method of the superclass (GameObject), passing along deltaTime
     super.update(deltaTime);
   }
 
+  handleEnemyState(){
+    if (this.lives <= 0) {
+      this.emitDeathParticles(this); // Emit particles on the enemy's position
+      this.game.removeGameObject(this); // Remove the enemy from the game
+    }
+  }
   handleMovement(deltaTime){
     // Get the Physics component of this enemy
     const physics = this.getComponent(Physics);
@@ -90,7 +98,7 @@ class Enemy extends GameObject {
       if (physics.isColliding(bullet.getComponent(Physics))) {
         this.emitBulletParticles(this); // Emit particles on the enemy's position
         this.game.removeGameObject(bullet); // Remove the bullet from the game
-        this.game.removeGameObject(this); // Remove the enemy from the game
+        this.lives--; // Decrease the enemy's lives
       }
     }
   }
@@ -123,8 +131,14 @@ class Enemy extends GameObject {
   }
 
   emitBulletParticles() {
-    // Create a particle system at the player's position when a collectible is collected
+    // Create a particle system at the enemy's position and add it to the game
     const particleSystem = new ParticleSystem(this.x, this.y, 'purple', 20, 0.5, 0.5);
+    this.game.addGameObject(particleSystem);
+  }
+
+  emitDeathParticles() {
+    // Create a particle system at the enemy's position and add it to the game
+    const particleSystem = new ParticleSystem(this.x, this.y, 'purple', 12, 0.5, 0.5, 20);
     this.game.addGameObject(particleSystem);
   }
 }

@@ -48,9 +48,9 @@ class GameManager extends GameObject{
         }
 
         // Create enemies and add them to the game
-        this.game.addGameObject(new Enemy(platformWidth + gap + 50, 300));
-        this.game.addGameObject(new Enemy(2 * (platformWidth + gap) + 50, 300));
-        this.game.addGameObject(new Enemy(3 * (platformWidth + gap) + 50, 300));
+        this.game.addGameObject(new Enemy(platformWidth + gap + 50, 300, 5));
+        this.game.addGameObject(new Enemy(2 * (platformWidth + gap) + 50, 300, 5));
+        this.game.addGameObject(new Enemy(3 * (platformWidth + gap) + 50, 300, 3));
         // Create collectibles and add them to the game
         this.game.addGameObject(new Collectible(450, 400, 20, 20));
         this.game.addGameObject(new Collectible(650, 400, 20, 20));
