@@ -8,12 +8,12 @@ import Renderer from '../components/renderer.js';
 import Physics from '../components/physics.js';
 
 class Bullet extends GameObject {
-    constructor(x, y, width, height, direction, color = 'white') {   
+    constructor(x, y, width, height, direction, color = 'white', image, shape) {   
         // Call the constructor of the superclass (GameObject) with the x and y coordinates
         super(x, y);
         // Add a new Renderer component to this bullet. The renderer is responsible for drawing the bullet.
         // It uses the provided color, width, and height.
-        this.addComponent(new Renderer(color, width, height));   
+        this.addComponent(new Renderer(color, width, height, image, shape));   
         // Add a new Physics component to this bullet. The physics component is responsible for handling the physics
         // (like movement, collision detection, etc.). In this case, the bullet doesn't move,
         // so the initial velocity, acceleration, and friction are all set to zero.
@@ -26,6 +26,8 @@ class Bullet extends GameObject {
         // Set the 'value' property of this bullet. This could be used to score points when the bullet is collected.
         this.value = 1;
         this.direction = direction;
+        this.image = image;
+        this.shape = shape;
     }
 
     move(){

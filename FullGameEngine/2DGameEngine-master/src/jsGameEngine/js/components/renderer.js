@@ -3,12 +3,13 @@ import Component from '../base/component.js';
 // The Renderer class extends Component and handles the visual representation of a game object.
 class Renderer extends Component {
   // The constructor initializes the renderer component with optional color, width, height, and image.
-  constructor(color = 'white', width = 50, height = 50, image = null) {
+  constructor(color = 'white', width = 50, height = 50, image = null, shape = 'rectangle') {
     super(); // Call the parent constructor.
     this.color = color; // Initialize the color.
     this.width = width; // Initialize the width.
     this.height = height; // Initialize the height.
     this.image = image; // Initialize the image.
+    this.shape = shape; // Initialize the shape.
   }
 
   // The draw method handles rendering the game object on the canvas.
@@ -35,6 +36,16 @@ class Renderer extends Component {
         ctx.drawImage(this.image, 0, 0, w, h);
         ctx.restore();
       }
+    } else if (this.shape === 'circle') { // Check if the shape is a circle.
+      // If the shape is a circle, draw a circle with the specified color.
+      ctx.fillStyle = this.color; // Set the fill color.
+      const x = this.gameObject.x + this.width / 2; // Get the x coordinate of the center of the circle.
+      const y = this.gameObject.y + this.height / 2; // Get the y coordinate of the center of the circle.
+      const radius = Math.min(this.width, this.height) / 2; // The radius is half the width or height, whichever is smaller.
+      ctx.beginPath(); // Begin drawing the circle.
+      ctx.arc(x, y, radius, 0, 2 * Math.PI); // Define the circle.
+      ctx.closePath(); // End drawing the circle.
+      ctx.fill(); // Fill the circle with the specified color.
     } else {
       // If no image is provided or it has not finished loading, draw a rectangle with the specified color.
       ctx.fillStyle = this.color;

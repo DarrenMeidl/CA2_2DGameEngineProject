@@ -294,22 +294,39 @@ class Player extends GameObject {
     const input = this.getComponent(Input); // Get input component
     
     // Handle player shoot with cooldown
-    if (input.isKeyDown('Escape') && !this.isCoolingDown) {
-      console.log("Calling shoot");
-      this.shoot();
-      this.isCoolingDown = true;
-      setTimeout(() => {
+    if (input.isKeyDown('Escape') && !this.isCoolingDown) { 
+      console.log("Calling shoot"); 
+      this.shoot(); // Shoot a bullet
+      this.isCoolingDown = true; // Set the cooldown flag to true
+      setTimeout(() => { // Set a timeout to set the cooldown flag to false after 250 milliseconds
         this.isCoolingDown = false;
-      }, 250); // Cooldown for half a second (500 milliseconds)
+      }, 250); // Cooldown for a quarter of a second (250 milliseconds)
+    }
+    // Handle player big shoot with cooldown
+    else if (input.isKeyDown('KeyJ') && !this.isCoolingDown) {
+      console.log("Calling bigshoot");
+      this.shootBigBullet(); // Shoot a big bullet
+      this.isCoolingDown = true; // Set the cooldown flag to true
+      setTimeout(() => {  // Set a timeout to set the cooldown flag to false after 1000 milliseconds
+        this.isCoolingDown = false;
+      }, 1000); // Cooldown for a second (1000 milliseconds)
     }
   }
 
   shoot(){
-    const bulletDirection = this.direction;
-    const bullet = new Bullet(this.x, this.y + 25, 5, 5, bulletDirection);
-    this.bullets.push(bullet);
-    this.game.addGameObject(bullet);
-    console.log("Called Shoot");
+    const bulletDirection = this.direction; // Get the player's direction
+    const bullet = new Bullet(this.x, this.y + 25, 5, 5, bulletDirection); // Create a new bullet
+    this.bullets.push(bullet); // Add the bullet to the bullets array
+    this.game.addGameObject(bullet); // Add the bullet to the game
+    console.log("Called Shoot"); // Log to the console
+  }
+
+  shootBigBullet(){
+    const bulletDirection = this.direction; // Get the player's direction
+    const bullet = new Bullet(this.x, this.y + 25, 10, 10, bulletDirection, 'green', null, 'circle'); // Create a new bullet
+    this.bullets.push(bullet); // Add the bullet to the bullets array
+    this.game.addGameObject(bullet); // Add the bullet to the game
+    console.log("Called BigShoot"); // Log to the console
   }
 
   reset() {

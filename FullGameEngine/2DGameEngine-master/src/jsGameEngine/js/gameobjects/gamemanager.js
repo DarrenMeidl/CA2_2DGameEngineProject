@@ -18,11 +18,11 @@ class GameManager extends GameObject{
         const input = this.getComponent(Input); // Get the input component
         if (input.isKeyDown('KeyR') && !this.isCoolingDown){
             console.log('R pressed');
-            this.resetGame();
-            this.isCoolingDown = true;
-            setTimeout(() => {
-                this.isCoolingDown = false;
-            }, 1000); // Cooldown for half a second (500 milliseconds)
+            this.resetGame(); // Reset the game
+            this.isCoolingDown = true; // Set the cooldown flag
+            setTimeout(() => { // Set a timeout to reset the cooldown flag
+                this.isCoolingDown = false; // Reset the cooldown flag
+            }, 1000); // Cooldown for a second (1000 milliseconds)
         }
         super.update(deltaTime);
     }
@@ -35,15 +35,15 @@ class GameManager extends GameObject{
         const gap = 100;
 
         const bullets = this.game.gameObjects.filter(obj => obj instanceof Bullet); // Find the bullet
-        for (const bullet of bullets) {
+        for (const bullet of bullets) { // Loop through the bullets
             this.game.removeGameObject(bullet); // Remove the bullet from the game
         }
         const enemies = this.game.gameObjects.filter(obj => obj instanceof Enemy); // Find the enemies
-        for (const enemy of enemies) {
+        for (const enemy of enemies) { // Loop through the enemies
             this.game.removeGameObject(enemy); // Remove the enemy from the game
         }
         const collectibles = this.game.gameObjects.filter(obj => obj instanceof Collectible); // Find the collectibles
-        for (const collectible of collectibles) {
+        for (const collectible of collectibles) { // Loop through the collectibles
             this.game.removeGameObject(collectible); // Remove the collectible from the game
         }
 
