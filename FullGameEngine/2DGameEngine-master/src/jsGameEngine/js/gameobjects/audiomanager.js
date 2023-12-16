@@ -18,10 +18,6 @@ class AudioManager extends GameObject { ////////NEW
     setVolume(volume) {
         this.backgroundMusic.volume = volume;
     }
-
-    reset(){
-        this.backgroundMusic.pause();
-    }
 }
 
 export default AudioManager; 

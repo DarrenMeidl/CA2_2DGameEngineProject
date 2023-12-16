@@ -60,10 +60,7 @@ class Player extends GameObject {
     this.handleCollisions(); // Handle collisions
     this.handleShoot(); // Handle shoot
     this.handlePlayerStates(); // Handle player states
-    // Move all bullets
-    for (const bullet of this.bullets) {
-      bullet.move();
-    }
+    
     super.update(deltaTime); // Call parent's update method
   }
 
