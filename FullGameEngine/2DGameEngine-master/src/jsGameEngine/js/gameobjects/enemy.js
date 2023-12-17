@@ -10,11 +10,12 @@ import Physics from '../components/physics.js';
 // Import the Images object from the 'engine' directory. This object contains all the game's image resources
 import {Images} from '../components/resources.js';
 
-// Import the Player and Platform classes from the current directory
+// Import the Player, Platform, Bullet, ParticleSystem classes from the current directory
 import Player from './player.js';
 import Platform from './platform.js';
 import Bullet from './bullet.js';
 import ParticleSystem from '../gameobjects/particleSystem.js';
+import Animation from '../components/animation.js';
 
 // Define a new class, Enemy, which extends (i.e., inherits from) GameObject
 class Enemy extends GameObject {
@@ -37,6 +38,19 @@ class Enemy extends GameObject {
     this.movementDistance = 0;
     this.movementLimit = 100;
     this.movingRight = true;
+
+
+    //WALK ANIMATION
+    this.walkFrames = []; // Array to store walk frames
+    this.walkFrames.push(Images.enemy_walk_0);
+    this.walkFrames.push(Images.enemy_walk_1);
+    this.walkFrames.push(Images.enemy_walk_2);
+    this.walkFrames.push(Images.enemy_walk_3);
+    this.walkFrames.push(Images.enemy_walk_4);
+    this.walkFrames.push(Images.enemy_walk_5);
+    this.walkAnimation = new Animation(this.walkFrames, 10); // Create an instance of Animation for walk animation
+    this.addComponent(this.walkAnimation); // Add the walk animation to the player
+    
   }
 
   // Define an update method that will run every frame of the game. It takes deltaTime as an argument
@@ -45,8 +59,29 @@ class Enemy extends GameObject {
     this.handleCollisions();
     this.handleMovement(deltaTime);
     this.handleEnemyState();
+    this.handleAnimations();
     // Call the update method of the superclass (GameObject), passing along deltaTime
     super.update(deltaTime);
+  }
+
+  //This function handles all animations
+  handleAnimations(){
+    this.handleWalkAnimation(); // Handle walk animation
+  }
+
+  handleWalkAnimation() { // Handle movement animation
+    const physics = this.getComponent(Physics); // Get physics component
+    const walkAnimation = this.getComponent(Animation); // Get walk animation component
+
+    //Handle Walk Animation
+    if (physics.velocity.x === 0) { // If the enemy is not moving, play walk animation
+      this.getComponent(Renderer).image = walkAnimation.stop();
+      this.getComponent(Renderer).image = Images.enemy; // Renders image by setting the enemy's image to the default image
+    } 
+    else if (physics.velocity.x !== 0) { // If the enemy is moving, play walk animation
+      walkAnimation.play();
+      this.getComponent(Renderer).image = walkAnimation.getCurrentFrame(); // Renders image by setting the enemy's image to the current frame of the walk animation
+    }
   }
 
   handleEnemyState(){
