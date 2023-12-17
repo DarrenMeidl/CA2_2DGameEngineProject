@@ -59,7 +59,7 @@ class Level extends Game {
     }
 
     // Create a player object and add it to the game
-    const player = new Player(3000, this.canvas.height - 700);
+    const player = new Player(300, this.canvas.height - 500);
     this.addGameObject(player);
 
     // Set the game's camera target to the player
