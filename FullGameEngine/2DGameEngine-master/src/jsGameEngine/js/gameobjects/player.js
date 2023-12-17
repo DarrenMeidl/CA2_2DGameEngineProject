@@ -80,12 +80,6 @@ class Player extends GameObject {
       const gameManager = this.game.gameObjects.find(obj => obj instanceof GameManager); // Find the game manager
       gameManager.resetGame();
     }
-    // Check if player has collected all collectibles
-    if (this.score >= 3) {
-      console.log('You win!');
-      const gameManager = this.game.gameObjects.find(obj => obj instanceof GameManager); // Find the game manager
-      gameManager.resetGame();
-    }
   }
 
 
@@ -353,7 +347,7 @@ class Player extends GameObject {
 
   reset() {
     // Reset the player's state, repositioning it and nullifying movement
-    this.x = 1250;
+    this.x = 300;
     this.y = -100;
     this.getComponent(Physics).velocity = { x: 0, y: 0 };
     this.getComponent(Physics).acceleration = { x: 0, y: 0 };

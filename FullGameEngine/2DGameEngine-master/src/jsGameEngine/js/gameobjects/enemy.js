@@ -174,13 +174,13 @@ class Enemy extends GameObject {
 
   emitBulletParticles() {
     // Create a particle system at the enemy's position and add it to the game
-    const particleSystem = new ParticleSystem(this.x, this.y, 'purple', 20, 0.5, 0.5);
+    const particleSystem = new ParticleSystem(this.x, this.y, 'orange', 20, 0.5, 0.5);
     this.game.addGameObject(particleSystem);
   }
 
   emitDeathParticles() {
     // Create a particle system at the enemy's position and add it to the game
-    const particleSystem = new ParticleSystem(this.x, this.y, 'purple', 12, 0.5, 0.5, 20);
+    const particleSystem = new ParticleSystem(this.x, this.y, 'orange', 12, 0.5, 0.5, 20);
     this.game.addGameObject(particleSystem);
   }
 }

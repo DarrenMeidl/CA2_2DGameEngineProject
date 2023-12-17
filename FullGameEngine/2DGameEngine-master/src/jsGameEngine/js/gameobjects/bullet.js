@@ -54,7 +54,7 @@ class Bullet extends GameObject {
     }
 
     handleBulletState(){
-        if (this.x > 5000 || this.x < -2000){ // If the bullet is out of bounds
+        if (this.x > 7000 || this.x < -2000){ // If the bullet is out of bounds
             this.isCoolingDown = true; // Set the cooldown flag to true
             setTimeout(() => {  // Set a timeout to set the cooldown flag to false after 3000 milliseconds
                 this.isCoolingDown = false;

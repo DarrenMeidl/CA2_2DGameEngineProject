@@ -47,14 +47,23 @@ class GameManager extends GameObject{
             this.game.removeGameObject(collectible); // Remove the collectible from the game
         }
 
-        // Create enemies and add them to the game
-        this.game.addGameObject(new Enemy(platformWidth + gap + 50, 300, 5));
-        this.game.addGameObject(new Enemy(2 * (platformWidth + gap) + 50, 300, 5));
-        this.game.addGameObject(new Enemy(3 * (platformWidth + gap) + 50, 300, 3));
-        // Create collectibles and add them to the game
+        // Create enemies and add them to the game again
+        this.game.addGameObject(new Enemy(1400, 113, 3));
+        this.game.addGameObject(new Enemy(2050, 163, 3));
+        this.game.addGameObject(new Enemy(2150, 163, 3));
+        this.game.addGameObject(new Enemy(2250, 163, 3));
+        this.game.addGameObject(new Enemy(3200, -37, 5));
+        this.game.addGameObject(new Enemy(3500, -37, 5));
+
+        // Create collectibles and add them to the game again
         this.game.addGameObject(new Collectible(450, 400, 20, 20));
         this.game.addGameObject(new Collectible(650, 400, 20, 20));
         this.game.addGameObject(new Collectible(850, 400, 20, 20));
+        this.game.addGameObject(new Collectible(2650, 293, 20, 20));
+        this.game.addGameObject(new Collectible(2850, 193, 20, 20));
+        this.game.addGameObject(new Collectible(3050, 93, 20, 20));
+        this.game.addGameObject(new Collectible(3450, -107, 20, 20));
+        this.game.addGameObject(new Collectible(3750, -107, 20, 20));
 
         this.game.reset();
     }
