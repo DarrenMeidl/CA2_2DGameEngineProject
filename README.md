@@ -1,4 +1,4 @@
-This is a shooter prototype built using a custom made javascript game engine comprised of base classes, components and game objects.
+This is a shooter prototype built using a custom made javascript game engine comprised of base classes, components and game objects with the aid of Github Co-pilot.
 
 Your goal is to reach the end of the level, collecting coins and killing as much enemies as possible.
 
