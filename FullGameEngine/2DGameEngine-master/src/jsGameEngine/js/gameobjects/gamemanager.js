@@ -46,7 +46,7 @@ class GameManager extends GameObject{
         for (const collectible of collectibles) { // Loop through the collectibles
             this.game.removeGameObject(collectible); // Remove the collectible from the game
         }
-
+        // Co pilot helped add these in for saving time on repetition
         // Create enemies and add them to the game again
         this.game.addGameObject(new Enemy(1400, 113, 3));
         this.game.addGameObject(new Enemy(2050, 163, 3));

@@ -37,7 +37,7 @@ class Player extends GameObject {
     this.isGamepadMovement = false;
     this.isGamepadJump = false;
 
-    //WALK ANIMATION
+    //WALK ANIMATION, used co pilot
     this.walkFrames = []; // Array to store walk frames
     this.walkFrames.push(Images.walk_0);
     this.walkFrames.push(Images.walk_1);
@@ -213,7 +213,7 @@ class Player extends GameObject {
   handleAnimations(){
     this.handleWalkAnimation(); // Handle walk animation
   }
-
+  // Co pilot helped code this function
   handleWalkAnimation() { // Handle movement animation
     const physics = this.getComponent(Physics); // Get physics component
     const walkAnimation = this.getComponent(Animation); // Get walk animation component
@@ -344,7 +344,7 @@ class Player extends GameObject {
   }
 
 
-
+  // Co pilot helped fill in these variables
   reset() {
     // Reset the player's state, repositioning it and nullifying movement
     this.x = 300;

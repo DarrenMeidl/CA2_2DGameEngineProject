@@ -35,7 +35,7 @@ class Renderer extends Component {
         ctx.scale(-1, 1);
         ctx.drawImage(this.image, 0, 0, w, h);
         ctx.restore();
-      }
+      } // Co pilot helped make this else if statement
     } else if (this.shape === 'circle') { // Check if the shape is a circle.
       // If the shape is a circle, draw a circle with the specified color.
       ctx.fillStyle = this.color; // Set the fill color.

@@ -8,7 +8,7 @@ class Animation extends Component{
     this.isPlaying = false; // Flag to indicate if animation is playing
     this.intervalId = null; // Interval ID for animation loop
   }
-
+  // Co pilot helped make these functions
   play() { // Start animation
     if (this.isPlaying) return; // Animation is already playing
 
@@ -17,22 +17,6 @@ class Animation extends Component{
     this.intervalId = setInterval(() => { // Start animation loop
       this.currentFrame = (this.currentFrame + 1) % this.frames.length; // Increment frame index
       console.log(`Current frame: ${this.currentFrame}`);
-    }, 1000 / this.frameRate); // Interval is in milliseconds
-  }
-
-  playOneShot() { // Start animation and stop after one loop
-    if (this.isPlaying) return; // Animation is already playing
-
-    this.currentFrame = 0; // Reset frame index
-    this.isPlaying = true;
-    this.intervalId = setInterval(() => { // Start animation loop
-      this.currentFrame++; // Increment frame index
-      console.log(`Current frame: ${this.currentFrame}`);
-      if (this.currentFrame === this.frames.length) { // Check if it's the last frame
-        clearInterval(this.intervalId); // Stop animation loop
-        this.isPlaying = false;
-        console.log('Animation completed');
-      }
     }, 1000 / this.frameRate); // Interval is in milliseconds
   }
 
