@@ -9,7 +9,7 @@ import Physics from '../components/physics.js';
 
 // Import the Images object from the 'engine' directory. This object contains all the game's image resources
 import {Images} from '../components/resources.js';
-
+import {AudioFiles} from '../components/resources.js';
 // Import the Player, Platform, Bullet, ParticleSystem classes from the current directory
 import Player from './player.js';
 import Platform from './platform.js';
@@ -86,6 +86,8 @@ class Enemy extends GameObject {
 
   handleEnemyState(){
     if (this.lives <= 0) {
+      const deathSound = new Audio(AudioFiles.death);
+      deathSound.play(); //Play death sound
       this.emitDeathParticles(this); // Emit particles on the enemy's position
       this.game.removeGameObject(this); // Remove the enemy from the game
     }

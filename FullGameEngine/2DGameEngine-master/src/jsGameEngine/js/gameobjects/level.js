@@ -5,9 +5,11 @@ import Enemy from './enemy.js';
 import PlayerUI from './playerUI.js';
 import Platform from './platform.js';
 import Collectible from './collectible.js';
-import AudioManager from './audiomanager.js'; ////////NEW
+import AudioManager from './audiomanager.js';
 import FinishPoint from './finish.js';
 import GameManager from './gamemanager.js';
+import { Images } from '../components/resources.js';
+
 // Define a class Level that extends the Game class from the engine
 class Level extends Game {
   
@@ -16,20 +18,13 @@ class Level extends Game {
     // Call the constructor of the superclass (Game) with the canvas ID
     super(canvasId);
     
-    // Create a player object and add it to the game
-    //const player = new Player(this.canvas.width / 2 - 25, this.canvas.height / 2 - 25);
-    //this.addGameObject(player);
-    
     // Add the player UI object to the game
     this.addGameObject(new PlayerUI(10, 10));
 
-    // Add the audio manager object to the game
-    const audioManager = new AudioManager(10, 10); ////////NEW
-    audioManager.playBackgroundMusic(); ////////NEW
-    audioManager.setVolume(0); ////////NEW
-
-    // Set the game's camera target to the player
-    //this.camera.target = player;
+    // Add the audio manager object to the game, play background music and set the volume
+    const audioManager = new AudioManager(10, 10); 
+    audioManager.playBackgroundMusic(); 
+    audioManager.setVolume(0.5); 
 
     // Define the platform's width and the gap between platforms
     const platformWidth = 200;
@@ -55,10 +50,11 @@ class Level extends Game {
       this.addGameObject(platform);
     }
 
-
+    // Create a player object and add it to the game
     const player = new Player(1250, this.canvas.height - 500);
     this.addGameObject(player);
 
+    // Set the game's camera target to the player
     this.camera.target = player;
 
     // Create enemies and add them to the game

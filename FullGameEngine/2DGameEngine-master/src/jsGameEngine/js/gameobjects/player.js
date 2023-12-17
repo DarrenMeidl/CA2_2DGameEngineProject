@@ -72,6 +72,8 @@ class Player extends GameObject {
     // Check if player has fallen off the bottom of the screen
     if (this.y > this.game.canvas.height) {
       this.lives--;
+      const deathSound = new Audio(AudioFiles.death);
+      deathSound.play(); //Play death sound
     }
     // Check if player has no lives left
     if (this.lives <= 0) {
@@ -164,6 +166,38 @@ class Player extends GameObject {
     }
   }
   
+  startJump() {
+    // Initiate a jump if the player is on a platform
+    if (this.isOnPlatform) { 
+      this.isJumping = true;
+      this.isDoubleJumping = false;
+      this.jumpTimer = this.jumpTime;
+      this.getComponent(Physics).velocity.y = -this.jumpForce; // Set the vertical velocity to the jump force
+      this.isOnPlatform = false;
+      //Play jump sound
+      const jumpSound = new Audio(AudioFiles.jump); ////////NEW
+      jumpSound.play();
+    }
+    // Initiate a double jump if the player is not on a platform and is not already double jumping and when the jump timer is 0
+    if (!this.isOnPlatform && !this.isDoubleJumping && this.jumpTimer <= 0) { 
+      this.isDoubleJumping = true;
+      this.jumpTimer = this.jumpTime;
+      this.getComponent(Physics).velocity.y = -this.jumpForce; // Set the vertical velocity to the jump force
+      this.isOnPlatform = false;
+      //Play jump sound
+      const jumpSound = new Audio(AudioFiles.jump); ////////NEW
+      jumpSound.play();
+    }
+  }
+  
+  updateJump(deltaTime) {
+    // Updates the jump progress over time
+    this.jumpTimer -= deltaTime;
+    if (this.jumpTimer <= 0 || this.getComponent(Physics).velocity.y > 0) {
+      this.isJumping = false;
+    }
+  }
+
   handleWalk(){
     const input = this.getComponent(Input); // Get input component
     const physics = this.getComponent(Physics); //Get physics component
@@ -178,6 +212,9 @@ class Player extends GameObject {
       physics.velocity.x = 0;
     }
   }
+
+
+
   //This function handles all animations
   handleAnimations(){
     this.handleWalkAnimation(); // Handle walk animation
@@ -197,6 +234,8 @@ class Player extends GameObject {
       this.getComponent(Renderer).image = walkAnimation.getCurrentFrame(); // Renders image by setting the player's image to the current frame of the walk animation
     }
   }
+
+  
 
   handleGamepadInput(input){
     const gamepad = input.getGamepad(); // Get the gamepad input
@@ -233,38 +272,8 @@ class Player extends GameObject {
     }
   }
 
-  startJump() {
-    // Initiate a jump if the player is on a platform
-    if (this.isOnPlatform) { 
-      this.isJumping = true;
-      this.isDoubleJumping = false;
-      this.jumpTimer = this.jumpTime;
-      this.getComponent(Physics).velocity.y = -this.jumpForce; // Set the vertical velocity to the jump force
-      this.isOnPlatform = false;
-      //Play jump sound
-      const jumpSound = new Audio(AudioFiles.jump); ////////NEW
-      jumpSound.play();
-    }
-    // Initiate a double jump if the player is not on a platform and is not already double jumping and when the jump timer is 0
-    if (!this.isOnPlatform && !this.isDoubleJumping && this.jumpTimer <= 0) { 
-      this.isDoubleJumping = true;
-      this.jumpTimer = this.jumpTime;
-      this.getComponent(Physics).velocity.y = -this.jumpForce; // Set the vertical velocity to the jump force
-      this.isOnPlatform = false;
-      //Play jump sound
-      const jumpSound = new Audio(AudioFiles.jump); ////////NEW
-      jumpSound.play();
-    }
-  }
+
   
-  
-  updateJump(deltaTime) {
-    // Updates the jump progress over time
-    this.jumpTimer -= deltaTime;
-    if (this.jumpTimer <= 0 || this.getComponent(Physics).velocity.y > 0) {
-      this.isJumping = false;
-    }
-  }
 
   collidedWithEnemy() {
     // Checks collision with an enemy and reduce player's life if not invulnerable
@@ -280,6 +289,8 @@ class Player extends GameObject {
 
   collect(collectible) {
     // Handle collectible pickup
+    const collectSound = new Audio(AudioFiles.collect);
+    collectSound.play(); //Play collect sound
     this.score += collectible.value;
     this.lives += collectible.value; //Picking up a collectible also gives the player an extra life
     console.log(`Score: ${this.score}`);
@@ -291,6 +302,8 @@ class Player extends GameObject {
     const particleSystem = new ParticleSystem(this.x, this.y, 'yellow', 20, 1, 0.5);
     this.game.addGameObject(particleSystem);
   }
+
+
 
   handleShoot(){
     const input = this.getComponent(Input); // Get input component
@@ -320,6 +333,8 @@ class Player extends GameObject {
     const bullet = new Bullet(this.x, this.y + 25, 5, 5, bulletDirection); // Create a new bullet
     this.bullets.push(bullet); // Add the bullet to the bullets array
     this.game.addGameObject(bullet); // Add the bullet to the game
+    const shootSound = new Audio(AudioFiles.shoot);
+    shootSound.play(); //Play shoot sound
     console.log("Called Shoot"); // Log to the console
   }
 
@@ -328,8 +343,12 @@ class Player extends GameObject {
     const bullet = new Bullet(this.x, this.y + 25, 10, 10, bulletDirection, 'green', null, 'circle'); // Create a new bullet
     this.bullets.push(bullet); // Add the bullet to the bullets array
     this.game.addGameObject(bullet); // Add the bullet to the game
+    const shootSound = new Audio(AudioFiles.shoot);
+    shootSound.play(); //Play shoot sound
     console.log("Called BigShoot"); // Log to the console
   }
+
+
 
   reset() {
     // Reset the player's state, repositioning it and nullifying movement
