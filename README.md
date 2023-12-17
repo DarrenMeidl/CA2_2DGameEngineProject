@@ -9,3 +9,12 @@ Space (again) - Double Jump
 L - Shoot Bullet
 P - Shoot Big Bullet (slower shot speed, more damage)
 R - Reset Game
+
+REFERENCES:
+Player images: 
+Enemy images: 
+Background images: 
+Coin images: 
+Platform imagse: 
+
+Creator - Darren Meidl
