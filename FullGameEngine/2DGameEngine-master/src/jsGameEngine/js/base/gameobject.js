@@ -20,6 +20,20 @@ class GameObject {
       // This way, the component has a reference back to the GameObject it is attached to.
       component.gameObject = this;
     }
+
+    // The removeComponent method is used to remove a component from this GameObject.
+    removeComponent(component) {
+      // Get the index of the component in the list of this GameObject's components.
+      const componentIndex = this.components.indexOf(component);
+      // Check if the component was found.
+      if (componentIndex !== -1) {
+        // Remove the component from the list of this GameObject's components.
+        this.components.splice(componentIndex, 1);
+        // Set the gameObject property of the component to null.
+        // This way, the component no longer has a reference back to the GameObject it was attached to.
+        component.gameObject = null;
+      }
+    }
   
     // The update method is called once per game frame, and calls the update method on all of this GameObject's components.
     // deltaTime is the amount of time passed since the last frame, and is passed down to all components.
