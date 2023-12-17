@@ -158,7 +158,7 @@ class Player extends GameObject {
   handleJump(deltaTime){
     const input = this.getComponent(Input); // Get input component
     // Handle player jumping
-    if (!this.isGamepadJump && input.isKeyDown('ArrowUp')) {
+    if (!this.isGamepadJump && input.isKeyDown('Space')) {
       this.startJump();
     }
     if (this.isJumping || this.isDoubleJumping) {
@@ -202,10 +202,10 @@ class Player extends GameObject {
     const input = this.getComponent(Input); // Get input component
     const physics = this.getComponent(Physics); //Get physics component
     // Handle player movement
-    if (!this.isGamepadMovement && input.isKeyDown('ArrowRight')) {
+    if (!this.isGamepadMovement && input.isKeyDown('KeyD')) {
       physics.velocity.x = 100;
       this.direction = 1;
-    } else if (!this.isGamepadMovement && input.isKeyDown('ArrowLeft')) {
+    } else if (!this.isGamepadMovement && input.isKeyDown('KeyA')) {
       physics.velocity.x = -100;
       this.direction = -1;
     } else if (!this.isGamepadMovement) {
@@ -309,7 +309,7 @@ class Player extends GameObject {
     const input = this.getComponent(Input); // Get input component
     
     // Handle player shoot with cooldown
-    if (input.isKeyDown('Escape') && !this.isCoolingDown) { 
+    if (input.isKeyDown('KeyL') && !this.isCoolingDown) { 
       console.log("Calling shoot"); 
       this.shoot(); // Shoot a bullet
       this.isCoolingDown = true; // Set the cooldown flag to true
@@ -318,7 +318,7 @@ class Player extends GameObject {
       }, 250); // Cooldown for a quarter of a second (250 milliseconds)
     }
     // Handle player big shoot with cooldown
-    else if (input.isKeyDown('KeyJ') && !this.isCoolingDown) {
+    else if (input.isKeyDown('KeyP') && !this.isCoolingDown) {
       console.log("Calling bigshoot");
       this.shootBigBullet(); // Shoot a big bullet
       this.isCoolingDown = true; // Set the cooldown flag to true
