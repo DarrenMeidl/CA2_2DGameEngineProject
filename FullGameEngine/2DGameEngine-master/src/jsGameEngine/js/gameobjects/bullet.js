@@ -30,13 +30,13 @@ class Bullet extends GameObject {
         this.shape = shape;
     }
 
-    update(deltaTime){
+    update(deltaTime){ // Update the bullet, calls the move and handleBulletState functions
         this.move();
         this.handleBulletState();
         super.update(deltaTime);
     }
 
-    move(){
+    move(){ // Move the bullet, depending on the direction it is facing
         if(this.direction == -1){
             this.x = this.x - 5;
         }
@@ -46,14 +46,13 @@ class Bullet extends GameObject {
     }
 
     handleBulletState(){
-        if (this.x > 5000 || this.x < -2000){
+        if (this.x > 5000 || this.x < -2000){ // If the bullet is out of bounds
             this.isCoolingDown = true; // Set the cooldown flag to true
             setTimeout(() => {  // Set a timeout to set the cooldown flag to false after 3000 milliseconds
                 this.isCoolingDown = false;
             }, 3000); // Cooldown for 3 seconds (3000 milliseconds)
-            console.log('Bullet out of bounds');
-            console.log(this.game.canvas.width);
-            this.game.removeGameObject(this);
+            console.log('Bullet out of bounds'); // Log a message to the console
+            this.game.removeGameObject(this); // Remove the bullet from the game
         }
     }
 }

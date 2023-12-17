@@ -46,6 +46,18 @@ class Player extends GameObject {
     this.idleAnimation = new Animation(this.idleFrames, 4); // Create an instance of Animation for idle animation
     this.addComponent(this.idleAnimation); // Add the idle animation to the player
 
+    //WALK ANIMATION
+    this.walkFrames = []; // Array to store walk frames
+    this.walkFrames.push(Images.walk_0);
+    this.walkFrames.push(Images.walk_1);
+    this.walkFrames.push(Images.walk_2);
+    this.walkFrames.push(Images.walk_3);
+    this.walkFrames.push(Images.walk_4);
+    this.walkFrames.push(Images.walk_5);
+    this.walkAnimation = new Animation(this.walkFrames, 6); // Create an instance of Animation for walk animation
+    this.addComponent(this.walkAnimation); // Add the walk animation to the player
+
+    //SHOOTING
     this.isShooting = false;
     this.bullets = [];
   }
@@ -177,20 +189,24 @@ class Player extends GameObject {
   }
   //This function handles all animations
   handleAnimations(){
-    this.handleIdleAnimation(); // Handle idle animation
+    this.handleMovementAnimation(); // Handle idle animation
   }
 
-  handleIdleAnimation() { // Handle idle animation
+  handleMovementAnimation() { // Handle movement animation
     const physics = this.getComponent(Physics); // Get physics component
     const idleAnimation = this.getComponent(Animation); // Get idle animation component
+    const walkAnimation = this.getComponent(Animation); // Get walk animation component
+
     //Handle Idle Animation
     if (physics.velocity.x === 0) { // If the player is not moving, play idle animation
-      idleAnimation.playOneShot();
+      this.getComponent(Renderer).image = walkAnimation.stop();
+      idleAnimation.play();
       this.getComponent(Renderer).image = idleAnimation.getCurrentFrame(); // Renders image by setting the player's image to the current frame of the idle animation
     } 
-    else if (physics.velocity.x !== 0) { // If the player is moving, stop idle animation, set player image to default image
+    else if (physics.velocity.x !== 0) { // If the player is moving, stop idle animation, play walk animation
       this.getComponent(Renderer).image = idleAnimation.stop();
-      this.getComponent(Renderer).image = Images.player;
+      walkAnimation.playOneShot();
+      this.getComponent(Renderer).image = walkAnimation.getCurrentFrame(); // Renders image by setting the player's image to the current frame of the walk animation
     }
   }
 
