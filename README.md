@@ -11,10 +11,10 @@ P - Shoot Big Bullet (slower shot speed, more damage)
 R - Reset Game
 
 REFERENCES:
-Player images: 
-Enemy images: 
-Background images: 
-Coin images: 
-Platform imagse: 
+Player images: https://dani-maccari.itch.io/nuclear-leak-character-asset-pack?download
+Enemy images: https://dani-maccari.itch.io/nuclear-leak-character-asset-pack?download
+Background images: https://free-game-assets.itch.io/free-horizontal-game-backgrounds
+Coin images: https://arcade-smasher.itch.io/rotating-coin-sprite-sheet 
+Platform imagse: https://zipix.itch.io/eden-platforms 
 
 Creator - Darren Meidl
