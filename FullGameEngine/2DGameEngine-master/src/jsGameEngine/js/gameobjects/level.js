@@ -23,7 +23,7 @@ class Level extends Game {
     // Add the audio manager object to the game, play background music and set the volume
     const audioManager = new AudioManager(10, 10); 
     audioManager.playBackgroundMusic(); 
-    audioManager.setVolume(0); 
+    audioManager.setVolume(0.4); 
 
     // Define the platform's width and the gap between platforms
     const platformWidth = 200;
