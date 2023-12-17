@@ -37,7 +37,7 @@ class Bullet extends GameObject {
     }
 
     move(){
-        if(this.direction == 1){
+        if(this.direction == -1){
             this.x = this.x - 5;
         }
         else {
@@ -46,12 +46,13 @@ class Bullet extends GameObject {
     }
 
     handleBulletState(){
-        if (this.x > this.game.canvas.width || this.x < 0){
+        if (this.x > 5000 || this.x < -2000){
             this.isCoolingDown = true; // Set the cooldown flag to true
             setTimeout(() => {  // Set a timeout to set the cooldown flag to false after 3000 milliseconds
                 this.isCoolingDown = false;
             }, 3000); // Cooldown for 3 seconds (3000 milliseconds)
             console.log('Bullet out of bounds');
+            console.log(this.game.canvas.width);
             this.game.removeGameObject(this);
         }
     }

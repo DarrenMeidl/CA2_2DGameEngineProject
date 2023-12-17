@@ -42,7 +42,8 @@ class Player extends GameObject {
     this.idleFrames.push(Images.idle_0);
     this.idleFrames.push(Images.idle_1);
     this.idleFrames.push(Images.idle_2);
-    this.idleAnimation = new Animation(this.idleFrames, 3); // Create an instance of Animation for idle animation
+    this.idleFrames.push(Images.idle_3);
+    this.idleAnimation = new Animation(this.idleFrames, 4); // Create an instance of Animation for idle animation
     this.addComponent(this.idleAnimation); // Add the idle animation to the player
 
     this.isShooting = false;
@@ -60,7 +61,7 @@ class Player extends GameObject {
     this.handleCollisions(); // Handle collisions
     this.handleShoot(); // Handle shoot
     this.handlePlayerStates(); // Handle player states
-    
+
     super.update(deltaTime); // Call parent's update method
   }
 
@@ -166,10 +167,10 @@ class Player extends GameObject {
     // Handle player movement
     if (!this.isGamepadMovement && input.isKeyDown('ArrowRight')) {
       physics.velocity.x = 100;
-      this.direction = -1;
+      this.direction = 1;
     } else if (!this.isGamepadMovement && input.isKeyDown('ArrowLeft')) {
       physics.velocity.x = -100;
-      this.direction = 1;
+      this.direction = -1;
     } else if (!this.isGamepadMovement) {
       physics.velocity.x = 0;
     }

@@ -5,6 +5,7 @@ const Images = {
   idle_0: new Image(), ////////NEW
   idle_1: new Image(), ////////NEW
   idle_2: new Image(), ////////NEW
+  idle_3: new Image(), ////////NEW
 };
 
 // Create an AudioFiles object to hold the file paths of the audio resources.
@@ -25,6 +26,7 @@ Images.enemy.src = './resources/images/enemy/enemy.png'; // Update the image pat
 Images.idle_0.src = './resources/images/player/idle_0.png'; ////////NEW
 Images.idle_1.src = './resources/images/player/idle_1.png'; ////////NEW
 Images.idle_2.src = './resources/images/player/idle_2.png'; ////////NEW
+Images.idle_3.src = './resources/images/player/idle_3.png'; ////////NEW
 
 // Export the Images and AudioFiles objects so they can be imported and used in other modules.
 export { Images, AudioFiles };
