@@ -3,6 +3,7 @@ const Images = {
   player: new Image(), // The Image instance for the player.
   enemy: new Image(), // The Image instance for the enemy.
   coin: new Image(), // The Image instance for the coin.
+  platform : new Image(), // The Image instance for the platform.
 
   // Walk images
   walk_0: new Image(),
@@ -38,6 +39,10 @@ Images.enemy.src = './resources/images/enemy/enemy.png'; // Update the image pat
 
 // Set the source of the coin image.
 Images.coin.src = './resources/images/collectibles/coin.png'; // Update the image path
+
+// Set the source of the platform image.
+Images.platform.src = './resources/images/platforms/platform_0.png'; // Update the image path
+
 // Set the source of the walk_x images
 Images.walk_0.src = './resources/images/player/walk_0.png';
 Images.walk_1.src = './resources/images/player/walk_1.png';

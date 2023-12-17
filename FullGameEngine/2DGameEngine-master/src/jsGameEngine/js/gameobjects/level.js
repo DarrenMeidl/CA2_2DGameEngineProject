@@ -37,12 +37,12 @@ class Level extends Game {
       new Platform(2 * (platformWidth + gap), this.canvas.height, platformWidth, 20),
       new Platform(3 * (platformWidth + gap), this.canvas.height, platformWidth, 20),
       //Stair platforms
-      new Platform(4 * (platformWidth + gap), this.canvas.height - 100, platformWidth/2, 20, "blue"),
-      new Platform(3 * (platformWidth + 150), this.canvas.height - 250, platformWidth/2, 20, "blue"),
-      new Platform(4 * (platformWidth + gap), this.canvas.height - 400, platformWidth/2, 20, "blue"),
+      new Platform(4 * (platformWidth + gap), this.canvas.height - 100, platformWidth/2, 20),
+      new Platform(3 * (platformWidth + 150), this.canvas.height - 250, platformWidth/2, 20),
+      new Platform(4 * (platformWidth + gap), this.canvas.height - 400, platformWidth/2, 20),
       //3rd Section
-      new Platform(1400, this.canvas.height - 400, 700, 20, "yellow"),
-      new Platform(1400, this.canvas.height - 700, 700, 20, "yellow"),
+      new Platform(1400, this.canvas.height - 400, 700, 20),
+      new Platform(1400, this.canvas.height - 700, 700, 20),
       //4th Section
       
     ];
