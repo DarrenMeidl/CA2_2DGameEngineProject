@@ -132,7 +132,12 @@ class Enemy extends GameObject {
     // Handle collisions with collectibles
     const bullets = this.game.gameObjects.filter(obj => obj instanceof Bullet); // Find the bullet
     for (const bullet of bullets) {
-      if (physics.isColliding(bullet.getComponent(Physics))) {
+      if (physics.isColliding(bullet.getComponent(Physics)) && bullet.getTag() == 'bigBullet'){
+        this.emitBulletParticles(this); // Emit particles on the enemy's position
+        this.game.removeGameObject(bullet); // Remove the bullet from the game
+        this.lives = this.lives - 3; // Decrease the enemy's lives by 3
+      }
+      else if (physics.isColliding(bullet.getComponent(Physics))) {
         this.emitBulletParticles(this); // Emit particles on the enemy's position
         this.game.removeGameObject(bullet); // Remove the bullet from the game
         this.lives--; // Decrease the enemy's lives

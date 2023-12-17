@@ -341,6 +341,7 @@ class Player extends GameObject {
   shootBigBullet(){
     const bulletDirection = this.direction; // Get the player's direction
     const bullet = new Bullet(this.x, this.y + 25, 10, 10, bulletDirection, 'green', null, 'circle'); // Create a new bullet
+    bullet.setTag('bigBullet'); // Set the tag of the bullet to 'bigbullet'
     this.bullets.push(bullet); // Add the bullet to the bullets array
     this.game.addGameObject(bullet); // Add the bullet to the game
     const shootSound = new Audio(AudioFiles.shoot);

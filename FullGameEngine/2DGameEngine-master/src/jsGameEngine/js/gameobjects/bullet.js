@@ -36,6 +36,14 @@ class Bullet extends GameObject {
         super.update(deltaTime);
     }
 
+    getTag(){
+        return this.tag;
+    }
+
+    setTag(tag){
+        this.tag = tag;
+    }
+
     move(){ // Move the bullet, depending on the direction it is facing
         if(this.direction == -1){
             this.x = this.x - 5;
