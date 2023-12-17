@@ -33,16 +33,15 @@ class Level extends Game {
     // Create platforms and add them to the game
     const platforms = [
       //Starting platforms
-      new Platform(platformWidth + gap, this.canvas.height, platformWidth, 20),
-      new Platform(2 * (platformWidth + gap), this.canvas.height, platformWidth, 20),
-      new Platform(3 * (platformWidth + gap), this.canvas.height, platformWidth, 20),
+      new Platform(platformWidth + gap, this.canvas.height, platformWidth, 71),
+      new Platform(2 * (platformWidth + gap), this.canvas.height, platformWidth, 71),
+      new Platform(3 * (platformWidth + gap), this.canvas.height, platformWidth, 71),
       //Stair platforms
-      new Platform(4 * (platformWidth + gap), this.canvas.height - 100, platformWidth/2, 20),
-      new Platform(3 * (platformWidth + 150), this.canvas.height - 250, platformWidth/2, 20),
-      new Platform(4 * (platformWidth + gap), this.canvas.height - 400, platformWidth/2, 20),
+      new Platform(4 * (platformWidth + gap), this.canvas.height - 100, platformWidth/2, 71/2),
+      new Platform(3 * (platformWidth + 150), this.canvas.height - 250, platformWidth/2, 71/2),
+      new Platform(4 * (platformWidth + gap), this.canvas.height - 400, platformWidth/2, 71/2),
       //3rd Section
-      new Platform(1400, this.canvas.height - 400, 700, 20),
-      new Platform(1400, this.canvas.height - 700, 700, 20),
+      new Platform(1400, this.canvas.height - 400, platformWidth/2, 71/2),
       //4th Section
       
     ];
